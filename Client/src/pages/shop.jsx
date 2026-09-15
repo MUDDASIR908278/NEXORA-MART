@@ -1,102 +1,133 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowRight, Truck, ShieldCheck, RefreshCw, Headphones } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { Search } from 'lucide-react'
 import api from '../lib/api'
 import ProductCard from '../components/ProductCard'
 import Loader from '../components/Loader'
 
-const PERKS = [
-  { icon: Truck, title: 'Free Shipping', text: 'On orders over $100' },
-  { icon: ShieldCheck, title: 'Secure Payment', text: '256-bit SSL encryption' },
-  { icon: RefreshCw, title: 'Easy Returns', text: '30-day return window' },
-  { icon: Headphones, title: '24/7 Support', text: 'We are always here' },
-]
+const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home', 'Beauty', 'Sports']
+const LIMIT = 12
 
-export default function Home() {
+export default function Shop() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [products, setProducts] = useState([])
+  const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [term, setTerm] = useState(searchParams.get('search') || '')
+
+  const search = searchParams.get('search') || ''
+  const category = searchParams.get('category') || 'All'
+  const page = Number(searchParams.get('page') || 1)
+
+  const fetchProducts = useCallback(async () => {
+    setLoading(true)
+    try {
+      const params = { page, limit: LIMIT }
+      if (search) params.search = search
+      if (category !== 'All') params.category = category
+
+      const { data } = await api.get('/products', { params })
+      setProducts(data.products ?? data.data ?? [])
+      setTotal(data.total ?? 0)
+    } catch {
+      setProducts([])
+      setTotal(0)
+    } finally {
+      setLoading(false)
+    }
+  }, [search, category, page])
 
   useEffect(() => {
-    let active = true
+    fetchProducts()
+  }, [fetchProducts])
 
-    api
-      .get('/products', { params: { limit: 8, featured: true } })
-      .then(({ data }) => {
-        if (active) setProducts(data.products ?? data.data ?? [])
-      })
-      .catch(() => {})
-      .finally(() => active && setLoading(false))
+  const updateParams = (patch) => {
+    const next = new URLSearchParams(searchParams)
+    Object.entries(patch).forEach(([k, v]) => {
+      if (!v || v === 'All') next.delete(k)
+      else next.set(k, v)
+    })
+    if (!('page' in patch)) next.delete('page')
+    setSearchParams(next)
+  }
 
-    return () => {
-      active = false
-    }
-  }, [])
+  const handleSearch = (e) => {
+    e.preventDefault()
+    updateParams({ search: term.trim() })
+  }
+
+  const totalPages = Math.max(1, Math.ceil(total / LIMIT))
 
   return (
-    <>
-      <section className="hero">
-        <div className="container hero-inner">
-          <span className="hero-tag">New season · Up to 40% off</span>
-          <h1>
-            Everything you need, <span>delivered to your door</span>
-          </h1>
-          <p>
-            Discover thousands of curated products across electronics, fashion,
-            home and more — all at prices that make sense.
-          </p>
-          <div className="hero-actions">
-            <Link to="/shop" className="btn">
-              Shop now <ArrowRight size={17} />
-            </Link>
-            <Link to="/register" className="btn btn-outline">
-              Create account
-            </Link>
-          </div>
-        </div>
-      </section>
+    <div className="container page">
+      <h1 className="page-title">Shop</h1>
+      <p className="page-subtitle">
+        {total > 0 ? `${total} products available` : 'Browse our catalogue'}
+      </p>
 
-      <section className="section">
-        <div className="container">
-          <div
-            className="product-grid"
-            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}
+      <form onSubmit={handleSearch} className="filters">
+        <input
+          className="form-input"
+          style={{ maxWidth: 340 }}
+          placeholder="Search products..."
+          value={term}
+          onChange={(e) => setTerm(e.target.value)}
+        />
+        <button className="btn" type="submit">
+          <Search size={16} /> Search
+        </button>
+      </form>
+
+      <div className="filters">
+        {CATEGORIES.map((c) => (
+          <button
+            key={c}
+            className={`chip ${category === c ? 'active' : ''}`}
+            onClick={() => updateParams({ category: c })}
           >
-            {PERKS.map(({ icon: Icon, title, text }) => (
-              <div className="card" key={title} style={{ padding: 20 }}>
-                <Icon size={22} color="var(--primary)" />
-                <h4 style={{ margin: '12px 0 4px', fontSize: '0.98rem' }}>{title}</h4>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem' }}>{text}</p>
-              </div>
+            {c}
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <Loader />
+      ) : products.length === 0 ? (
+        <div className="empty-state">
+          <h3>No products found</h3>
+          <p>Try a different search term or category.</p>
+        </div>
+      ) : (
+        <>
+          <div className="product-grid">
+            {products.map((p) => (
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <div className="section-head">
-            <h2>Featured Products</h2>
-            <Link to="/shop" className="btn btn-ghost btn-sm">
-              View all <ArrowRight size={15} />
-            </Link>
-          </div>
-
-          {loading ? (
-            <Loader />
-          ) : products.length === 0 ? (
-            <div className="empty-state">
-              <h3>No products yet</h3>
-              <p>Add products in Supabase to see them here.</p>
-            </div>
-          ) : (
-            <div className="product-grid">
-              {products.map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button
+                className="btn btn-outline btn-sm"
+                disabled={page <= 1}
+                onClick={() => updateParams({ page: page - 1 })}
+              >
+                Previous
+              </button>
+              <span style={{ padding: '8px 14px', color: 'var(--text-muted)' }}>
+                Page {page} of {totalPages}
+              </span>
+              <button
+                className="btn btn-outline btn-sm"
+                disabled={page >= totalPages}
+                onClick={() => updateParams({ page: page + 1 })}
+              >
+                Next
+              </button>
             </div>
           )}
-        </div>
-      </section>
-    </>
+        </>
+      )}
+    </div>
   )
 }
