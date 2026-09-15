@@ -114,7 +114,9 @@ export default function Shop() {
               >
                 Previous
               </button>
-              <span style={{ padding: '8px 14px', color: 'var(--text-muted)' }}>
+              <span
+                style={{ padding: '8px 14px', color: 'var(--text-muted)' }}
+              >
                 Page {page} of {totalPages}
               </span>
               <button
