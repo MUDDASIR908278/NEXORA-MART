@@ -1,0 +1,161 @@
+-- =============================================================
+-- NEXORA MART — Seed data
+-- Run AFTER database/schema.sql
+-- Safe to re-run: uses ON CONFLICT DO NOTHING
+-- =============================================================
+
+-- =============================================================
+-- PRODUCTS
+-- =============================================================
+insert into public.products
+  (name, description, price, compare_at_price, category, image_url, stock, rating, featured)
+values
+  ('Aurora Wireless Headphones',
+   'Immersive over-ear sound with active noise cancellation and 40-hour battery life. Bluetooth 5.3, USB-C fast charge, and plush memory-foam earcups.',
+   149.99, 199.99, 'Electronics',
+   'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
+   40, 4.8, true),
+
+  ('Nova Smart Watch',
+   'Fitness tracking, heart-rate monitoring and a vivid AMOLED display in a slim aluminium case. 7-day battery, 5ATM water resistance.',
+   199.00, 249.00, 'Electronics',
+   'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+   30, 4.6, true),
+
+  ('Pulse Bluetooth Speaker',
+   'Portable 360° sound with deep bass, IPX7 waterproofing and 20-hour playtime. Pair two for true stereo.',
+   79.99, 99.99, 'Electronics',
+   'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80',
+   55, 4.5, false),
+
+  ('Vertex Mechanical Keyboard',
+   'Hot-swappable 75% layout with tactile brown switches, RGB backlighting and aluminium frame. USB-C detachable cable.',
+   129.00, 159.00, 'Electronics',
+   'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&q=80',
+   22, 4.7, true),
+
+  ('Lumen Desk Lamp',
+   'Minimal aluminium desk lamp with 5 colour temperatures, stepless dimming and USB-C charging port. Touch controls.',
+   69.00, null, 'Home',
+   'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80',
+   60, 4.4, false),
+
+  ('Ceramic Pour-Over Set',
+   'Hand-glazed ceramic dripper, 600ml carafe and reusable stainless filter. Brews a clean, bright cup every time.',
+   54.00, null, 'Home',
+   'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80',
+   45, 4.5, false),
+
+  ('Cloud Linen Throw',
+   'Stonewashed 100% French linen throw, 130×170cm. Gets softer with every wash. Available in sage and oat.',
+   89.00, 119.00, 'Home',
+   'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&q=80',
+   35, 4.6, false),
+
+  ('Terra Ceramic Planter',
+   'Hand-thrown terracotta planter with drainage hole and matching saucer. 18cm diameter, matte finish.',
+   32.00, null, 'Home',
+   'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&q=80',
+   90, 4.3, false),
+
+  ('Trail Running Sneakers',
+   'Lightweight mesh upper with responsive foam midsole and grippy rubber outsole — built for the long run.',
+   119.00, 139.00, 'Fashion',
+   'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80',
+   25, 4.7, true),
+
+  ('Everyday Leather Backpack',
+   'Full-grain leather backpack with padded 15" laptop sleeve, magnetic closure and lifetime warranty.',
+   179.00, 219.00, 'Fashion',
+   'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80',
+   18, 4.9, true),
+
+  ('Merino Crew Sweater',
+   'Mid-weight 100% merino wool crew neck. Breathable, odour-resistant and machine washable. Unisex fit.',
+   95.00, null, 'Fashion',
+   'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80',
+   40, 4.6, false),
+
+  ('Aviator Sunglasses',
+   'Polarised UV400 lenses in a lightweight titanium frame. Includes hard case and microfibre cloth.',
+   75.00, 95.00, 'Fashion',
+   'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80',
+   50, 4.5, false),
+
+  ('Vitamin C Glow Serum',
+   'Brightening 15% vitamin C serum with hyaluronic acid and ferulic acid. 30ml, fragrance-free.',
+   39.99, 49.99, 'Beauty',
+   'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80',
+   80, 4.7, false),
+
+  ('Hydrating Face Mask Set',
+   'Set of 5 sheet masks with hyaluronic acid, aloe and green tea. Suitable for all skin types.',
+   24.00, null, 'Beauty',
+   'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&q=80',
+   120, 4.4, false),
+
+  ('Cedar & Sage Candle',
+   'Hand-poured soy candle in a reusable amber glass jar. 45-hour burn time. Notes of cedarwood, sage and bergamot.',
+   28.00, 34.00, 'Beauty',
+   'https://images.unsplash.com/photo-1602874801007-bd458bb1b8b6?w=800&q=80',
+   65, 4.8, false),
+
+  ('Yoga Mat Pro',
+   'Extra-thick 6mm non-slip yoga mat with alignment lines, moisture-resistant surface and carry strap.',
+   49.00, null, 'Sports',
+   'https://images.unsplash.com/photo-1592432678016-e910b452f9a2?w=800&q=80',
+   70, 4.4, false),
+
+  ('Adjustable Dumbbell Set',
+   'Pair of adjustable dumbbells, 2.5–24kg per side with quick-lock plates. Space-saving home gym essential.',
+   249.00, 299.00, 'Sports',
+   'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80',
+   12, 4.7, true),
+
+  ('Insulated Water Bottle',
+   'Double-wall vacuum insulated 750ml bottle. Keeps drinks cold 24h, hot 12h. BPA-free, leak-proof lid.',
+   34.00, 44.00, 'Sports',
+   'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80',
+   100, 4.6, false)
+on conflict do nothing;
+
+-- =============================================================
+-- PROMOTE A USER TO ADMIN (optional)
+-- Replace the email below with the account you want to promote.
+-- The user must already exist in auth.users.
+-- =============================================================
+-- update public.profiles
+--    set role = 'admin'
+--  where email = 'you@example.com';
+
+-- =============================================================
+-- SAMPLE ORDER (optional — for testing /orders page)
+-- Replace the user_id with a real auth.users id.
+-- =============================================================
+-- with new_order as (
+--   insert into public.orders
+--     (user_id, status, payment_method, subtotal, shipping, tax, total, shipping_address)
+--   values
+--     ('00000000-0000-0000-0000-000000000000',
+--      'pending', 'cod', 149.99, 0, 7.50, 157.49,
+--      jsonb_build_object(
+--        'fullName','Jane Doe',
+--        'email','jane@example.com',
+--        'phone','+1 555 0100',
+--        'address','1 Market Street',
+--        'city','San Francisco',
+--        'state','CA',
+--        'postalCode','94103',
+--        'country','United States'
+--      ))
+--   returning id
+-- )
+-- insert into public.order_items (order_id, product_id, name, price, quantity)
+-- select new_order.id,
+--        p.id,
+--        p.name,
+--        p.price,
+--        1
+--   from new_order
+--   cross join public.products p
+--  where p.name = 'Aurora Wireless Headphones';

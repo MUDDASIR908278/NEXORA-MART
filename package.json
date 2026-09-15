@@ -1,0 +1,20 @@
+{
+  "name": "nexora-mart",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NEXORA MART - Full-stack e-commerce platform (React + Vite, Node + Express, Supabase)",
+  "scripts": {
+    "install:all": "npm install && npm --prefix client install && npm --prefix server install",
+    "dev": "concurrently -n server,client -c blue,green \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server run dev",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
