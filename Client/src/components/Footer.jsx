@@ -8,7 +8,73 @@ import {
   Mail,
   MapPin,
   Phone,
+  Clock,
 } from 'lucide-react'
+
+const CONTACT = {
+  email: 'siddiquimuddasir93@gmail.com',
+  phone: '+91 9082783346',
+  phoneHref: 'tel:+919082783346',
+  whatsapp: 'https://wa.me/919082783346',
+  location: 'Malad West, Mumbai - 400095, Maharashtra, India',
+  hours: 'Mon – Sat, 10:00 AM – 8:00 PM',
+}
+
+const SOCIALS = [
+  {
+    name: 'Instagram',
+    href: 'https://instagram.com/nexora_mart28',
+    icon: Instagram,
+  },
+  {
+    name: 'Facebook',
+    href: 'https://www.facebook.com/share/1J5ursccTa/',
+    icon: Facebook,
+  },
+  {
+    name: 'YouTube',
+    href: 'https://www.youtube.com/@NEXORA_MART28',
+    icon: Youtube,
+  },
+  {
+    name: 'X',
+    href: 'https://x.com/NEXORA_MART28',
+    icon: Twitter,
+  },
+  {
+    name: 'WhatsApp',
+    href: CONTACT.whatsapp,
+    icon: MessageCircle,
+  },
+]
+
+const SHOP_LINKS = [
+  { label: 'All Products', to: '/shop' },
+  { label: 'Toys', to: '/shop?category=Toys' },
+  { label: 'Baby', to: '/shop?category=Baby' },
+  { label: 'Home', to: '/shop?category=Home' },
+  { label: 'Kitchen', to: '/shop?category=Kitchen' },
+  { label: 'Fashion', to: '/shop?category=Fashion' },
+  { label: 'Beauty', to: '/shop?category=Beauty' },
+]
+
+const ACCOUNT_LINKS = [
+  { label: 'Sign In', to: '/login' },
+  { label: 'Register', to: '/register' },
+  { label: 'My Orders', to: '/orders' },
+  { label: 'Shopping Cart', to: '/cart' },
+  { label: 'Wishlist', to: '/wishlist' },
+  { label: 'Profile Settings', to: '/profile' },
+]
+
+const SUPPORT_LINKS = [
+  { label: 'Contact Us', to: '/contact' },
+  { label: 'Shipping Policy', to: '/shipping' },
+  { label: 'Returns & Refunds', to: '/returns' },
+  { label: 'FAQs', to: '/faq' },
+  { label: 'Privacy Policy', to: '/privacy' },
+  { label: 'Terms of Service', to: '/terms' },
+]
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -17,7 +83,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
-          {/* ============ COLUMN 1: BRAND ============ */}
+          {/* ============ BRAND COLUMN ============ */}
           <div className="footer-brand-col">
             <div className="footer-brand">
               NEXORA<span>MART</span>
@@ -28,105 +94,70 @@ export default function Footer() {
             </p>
 
             <p className="footer-desc">
-              Curated luxury essentials for the modern connoisseur. Discover
-              premium electronics, refined fashion, and timeless home pieces —
-              delivered with care, priced with honesty.
+              India&rsquo;s curated destination for premium essentials —
+              thoughtfully sourced electronics, fashion, home and lifestyle
+              pieces, delivered with care to your doorstep.
             </p>
 
             <div className="footer-contact">
               <a
-                href="mailto:care@nexoramart.com"
+                href={`mailto:${CONTACT.email}`}
                 className="footer-contact-item"
               >
                 <Mail size={15} strokeWidth={1.6} />
-                <span>care@nexoramart.com</span>
+                <span>{CONTACT.email}</span>
               </a>
-              <a href="tel:+18005550199" className="footer-contact-item">
+
+              <a href={CONTACT.phoneHref} className="footer-contact-item">
                 <Phone size={15} strokeWidth={1.6} />
-                <span>+1 (800) 555-0199</span>
+                <span>{CONTACT.phone}</span>
               </a>
+
               <div className="footer-contact-item">
                 <MapPin size={15} strokeWidth={1.6} />
-                <span>New York · London · Dubai</span>
+                <span>{CONTACT.location}</span>
+              </div>
+
+              <div className="footer-contact-item">
+                <Clock size={15} strokeWidth={1.6} />
+                <span>{CONTACT.hours}</span>
               </div>
             </div>
           </div>
 
-          {/* ============ COLUMN 2: SHOP ============ */}
+          {/* ============ SHOP COLUMN ============ */}
           <div>
             <h4>Shop</h4>
             <ul>
-              <li>
-                <Link to="/shop">All Products</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=Electronics">Electronics</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=Fashion">Fashion</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=Home">Home &amp; Living</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=Beauty">Beauty</Link>
-              </li>
-              <li>
-                <Link to="/shop?category=Sports">Sports</Link>
-              </li>
-              <li>
-                <Link to="/shop?featured=true">Featured</Link>
-              </li>
+              {SHOP_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to}>{link.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* ============ COLUMN 3: ACCOUNT ============ */}
+          {/* ============ ACCOUNT COLUMN ============ */}
           <div>
             <h4>Account</h4>
             <ul>
-              <li>
-                <Link to="/login">Sign In</Link>
-              </li>
-              <li>
-                <Link to="/register">Create Account</Link>
-              </li>
-              <li>
-                <Link to="/orders">My Orders</Link>
-              </li>
-              <li>
-                <Link to="/cart">Shopping Cart</Link>
-              </li>
-              <li>
-                <Link to="/wishlist">Wishlist</Link>
-              </li>
-              <li>
-                <Link to="/profile">Profile Settings</Link>
-              </li>
+              {ACCOUNT_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to}>{link.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* ============ COLUMN 4: SUPPORT ============ */}
+          {/* ============ SUPPORT COLUMN ============ */}
           <div>
             <h4>Support</h4>
             <ul>
-              <li>
-                <a href="mailto:care@nexoramart.com">Contact Us</a>
-              </li>
-              <li>
-                <Link to="/shipping">Shipping Policy</Link>
-              </li>
-              <li>
-                <Link to="/returns">Returns &amp; Refunds</Link>
-              </li>
-              <li>
-                <Link to="/faq">FAQs</Link>
-              </li>
-              <li>
-                <Link to="/privacy">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link to="/terms">Terms of Service</Link>
-              </li>
+              {SUPPORT_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to}>{link.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -138,47 +169,19 @@ export default function Footer() {
             <span className="heart">♥</span> for what&rsquo;s next.
           </div>
 
-          <div className="footer-social">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <Instagram size={17} strokeWidth={1.6} />
-            </a>
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <Facebook size={17} strokeWidth={1.6} />
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="YouTube"
-            >
-              <Youtube size={17} strokeWidth={1.6} />
-            </a>
-            <a
-              href="https://x.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-            >
-              <Twitter size={17} strokeWidth={1.6} />
-            </a>
-            <a
-              href="https://wa.me/18005550199"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-            >
-              <MessageCircle size={17} strokeWidth={1.6} />
-            </a>
+          <div className="footer-social" aria-label="Social media">
+            {SOCIALS.map(({ name, href, icon: Icon }) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={name}
+                title={name}
+              >
+                <Icon size={17} strokeWidth={1.6} />
+              </a>
+            ))}
           </div>
         </div>
       </div>
