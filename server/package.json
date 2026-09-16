@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "NEXORA MART backend API — Express + Supabase",
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
