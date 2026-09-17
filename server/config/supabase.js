@@ -14,6 +14,8 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
  */
 export const supabaseAnon = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
+  // Add global fetch for better Node.js compatibility
+  global: { fetch: fetch },
 })
 
 /**
@@ -23,6 +25,8 @@ export const supabaseAnon = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 export const supabaseAdmin = SUPABASE_SERVICE_ROLE_KEY
   ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
       auth: { persistSession: false, autoRefreshToken: false },
+      // Add global fetch for better Node.js compatibility
+      global: { fetch: fetch },
     })
   : supabaseAnon
 

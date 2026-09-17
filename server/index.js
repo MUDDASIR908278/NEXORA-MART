@@ -30,6 +30,9 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'))
 }
 
+/* -------------------- Trust proxy for Render/Heroku/Vercel -------------------- */
+app.set('trust proxy', 1)
+
 /* -------------------- Rate limiting -------------------- */
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
